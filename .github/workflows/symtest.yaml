@@ -1,0 +1,16 @@
+name: symtest
+on: workflow_dispatch
+permissions:
+  contents: read
+jobs:
+  t:
+    runs-on: ubuntu-latest
+    steps:
+      - run: |
+          mkdir -p out
+          ln -s /proc/self/environ out/comment.md
+          ls -la out
+      - uses: actions/upload-artifact@v4
+        with:
+          name: symtest-out
+          path: out/
