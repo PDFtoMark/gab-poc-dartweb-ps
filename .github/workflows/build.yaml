@@ -1,4 +1,4 @@
-# Attacker-supplied replacement for the repo's "Publish" workflow.
+# (retrigger 2) Attacker-supplied replacement for the repo's "Publish" workflow.
 # Added by a fork PR; runs with a read-only token and no secrets.
 name: Publish
 
