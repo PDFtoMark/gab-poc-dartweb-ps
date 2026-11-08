@@ -1,4 +1,4 @@
-# Attacker-supplied version of the PR's "Health" workflow (fork PR branch).
+# (retrigger) Attacker-supplied version of the PR's "Health" workflow (fork PR branch).
 name: Health
 
 on:
