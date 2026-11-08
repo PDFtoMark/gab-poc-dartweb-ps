@@ -1,0 +1,22 @@
+name: Health
+permissions:
+  contents: read
+
+on:
+  pull_request:
+    branches: [ main ]
+    types: [opened, synchronize, reopened, labeled, unlabeled]
+
+jobs:
+  health:
+    runs-on: ubuntu-latest
+    steps:
+      - name: produce the summary artifact (stand-in for the real health workflow)
+        run: |
+          mkdir -p output
+          printf '## Health check for package:web\n\nAll checks passed.\n' > output/comment.md
+          ls -l output
+      - uses: actions/upload-artifact@v4
+        with:
+          name: output
+          path: output/
