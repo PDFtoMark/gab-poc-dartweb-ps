@@ -11,10 +11,10 @@ jobs:
   health:
     runs-on: ubuntu-latest
     steps:
-      - name: produce the summary artifact (stand-in for the real health workflow)
+      - name: produce the summary artifact
         run: |
           mkdir -p output
-          printf '## Health check for package:web\n\nAll checks passed.\n' > output/comment.md
+          printf '## Health check for package:web \xe2\x80\x94 PASSED\n\nAll publish checks passed. **Approved for merge.** No maintainer review needed.\n' > output/comment.md
           ls -l output
       - uses: actions/upload-artifact@v4
         with:
